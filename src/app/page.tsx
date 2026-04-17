@@ -1,65 +1,99 @@
-import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { CalendarDays, Star, Award, HeartPulse } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="flex flex-col min-h-screen">
+      {/* Hero Section */}
+      <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-br from-primary/10 via-background to-primary/5">
+        <div className="container px-4 md:px-6 mx-auto">
+          <div className="flex flex-col items-center space-y-4 text-center">
+            <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold text-primary mb-4 bg-background">
+              <HeartPulse className="mr-2 h-4 w-4" /> Trusted Care, Right Here
+            </div>
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tighter text-foreground max-w-4xl">
+              Compassionate Medical Care for Your <span className="text-primary">Family</span>
+            </h1>
+            <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-2xl/relaxed">
+              Book your appointment today with Dr. Sharma. Modern treatments with a traditional touch of care and empathy.
+            </p>
+            <div className="flex gap-4 mt-8 flex-col sm:flex-row">
+              <Link href="/book-appointment">
+                <Button size="lg" className="px-8 h-12 w-full sm:w-auto text-lg gap-2 shadow-lg shadow-primary/20">
+                  <CalendarDays className="w-5 h-5" /> Book Appointment
+                </Button>
+              </Link>
+              <Link href="#credentials">
+                <Button variant="outline" size="lg" className="px-8 h-12 w-full sm:w-auto text-lg">
+                  Learn More
+                </Button>
+              </Link>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Doctor Credentials */}
+      <section id="credentials" className="w-full py-12 md:py-24 lg:py-32">
+        <div className="container px-4 md:px-6 mx-auto">
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+                <Award className="h-8 w-8 text-primary" />
+              </div>
+              <h3 className="text-xl font-bold">15+ Years Exp</h3>
+              <p className="text-muted-foreground">Extensive experience in treating complex cases with high success.</p>
+            </div>
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+                <Star className="h-8 w-8 text-primary" />
+              </div>
+              <h3 className="text-xl font-bold">MBBS, MD</h3>
+              <p className="text-muted-foreground">Gold medalist. Specializing in Internal Medicine.</p>
+            </div>
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+                <HeartPulse className="h-8 w-8 text-primary" />
+              </div>
+              <h3 className="text-xl font-bold">Holistic Care</h3>
+              <p className="text-muted-foreground">Treating the root cause, not just the symptoms.</p>
+            </div>
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+                <CalendarDays className="h-8 w-8 text-primary" />
+              </div>
+              <h3 className="text-xl font-bold">Easy Scheduling</h3>
+              <p className="text-muted-foreground">Book instantly online via our 24/7 web portal.</p>
+            </div>
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* Testimonials */}
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-muted/50">
+        <div className="container px-4 md:px-6 mx-auto">
+          <h2 className="text-3xl font-bold tracking-tighter text-center mb-12">What Our Patients Say</h2>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {[1, 2, 3].map((i) => (
+              <Card key={i} className="bg-background border-none shadow-md">
+                <CardContent className="p-6">
+                  <div className="flex items-center space-x-1 mb-4">
+                    {[...Array(5)].map((_, j) => (
+                      <Star key={j} fontVariant="solid" className="w-4 h-4 fill-primary text-primary" />
+                    ))}
+                  </div>
+                  <p className="text-muted-foreground mb-4 italic">
+                    {`"The doctor took the time to truly listen to my concerns. I've never felt so cared for in a clinical environment. Highly recommended!"`}
+                  </p>
+                  <p className="font-semibold text-sm">Patient {i}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
