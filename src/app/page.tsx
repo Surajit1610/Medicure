@@ -322,25 +322,23 @@ export default function Home() {
                   transition={{ duration: 0.3 }}
                   className="h-full"
                 >
-                  <Card className="group hover:shadow-xl transition-all duration-300 border-0 bg-background overflow-hidden h-full flex flex-col">
-                    <div className="relative w-full h-48 md:h-52 overflow-hidden bg-muted">
+                  <Card className="group hover:shadow-xl transition-all duration-300 border border-border/5 bg-card overflow-hidden h-full flex flex-col">
+                    <div className="relative w-full aspect-[16/10] overflow-hidden">
                       <Image 
                         src={service.image} 
                         alt={service.title} 
                         fill 
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
                       />
-                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-background via-background/60 to-transparent p-4 pb-0 flex items-end">
-                        <motion.div
-                          className="w-12 h-12 bg-background shadow-md rounded-t-xl rounded-br-xl rounded-bl-sm flex items-center justify-center translate-y-3"
-                          whileHover={{ rotate: 5, scale: 1.1 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          <service.icon className="h-6 w-6 text-primary" />
-                        </motion.div>
-                      </div>
                     </div>
-                    <CardHeader className="pt-8 pb-4">
+                    <CardHeader className="pt-8 pb-4 relative">
+                      <motion.div
+                        className="absolute -top-8 left-6 w-14 h-14 bg-background shadow-md border border-border/10 rounded-2xl flex items-center justify-center"
+                        whileHover={{ rotate: 10, scale: 1.1 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <service.icon className="h-7 w-7 text-primary" />
+                      </motion.div>
                       <CardTitle className="text-xl font-semibold font-poppins">{service.title}</CardTitle>
                     </CardHeader>
                     <CardContent className="flex-1">
