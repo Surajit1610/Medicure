@@ -1,5 +1,5 @@
 import { account, databaseId, databases } from './appwrite';
-import { ID, Models } from 'appwrite';
+import { ID, Models, OAuthProvider } from 'appwrite';
 
 export const getCurrentUser = async () => {
   try {
@@ -42,10 +42,26 @@ export const registerUser = async (email: string, password: string, name: string
 
 export const loginUser = async (email: string, password: string) => {
   try {
+    try {
+      await account.deleteSession("current");
+    } catch (_) {
+      // Ignored if there's no active session
+    }
     const session = await account.createEmailPasswordSession(email, password);
     return session;
   } catch (error) {
     console.error(error);
+    throw error;
+  }
+};
+
+export const loginWithGoogle = async () => {
+  try {
+    const successUrl = `${window.location.origin}/dashboard`;
+    const failureUrl = `${window.location.origin}/login?error=oauth_failed`;
+    account.createOAuth2Session(OAuthProvider.Google, successUrl, failureUrl);
+  } catch (error) {
+    console.error('Google login failed', error);
     throw error;
   }
 };

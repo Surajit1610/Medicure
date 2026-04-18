@@ -38,11 +38,18 @@ export default function PatientDashboard() {
     async function fetchUser() {
       const currentUser = await getCurrentUser();
       if (!currentUser) {
-        router.push("/book-appointment");
-      } else {
-        setUser(currentUser);
-        await Promise.all([fetchAppointments(currentUser.$id), fetchRecords(currentUser.$id)]);
+        router.push("/login");
+        return;
       }
+      
+      if (currentUser.labels && currentUser.labels.includes("doctor")) {
+        // Redirect doctor to their portal
+        router.push("/doctor");
+        return;
+      }
+
+      setUser(currentUser);
+      await Promise.all([fetchAppointments(currentUser.$id), fetchRecords(currentUser.$id)]);
       setLoading(false);
     }
     fetchUser();

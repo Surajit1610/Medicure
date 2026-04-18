@@ -12,7 +12,10 @@ import { LogOut, Check, X, FileText, UploadCloud, Users } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
 interface Appointment extends Models.Document {
-  patient_id: string;
+  patient_id?: string;
+  name: string;
+  email: string;
+  phone?: string;
   date_time: string;
   status: string;
   reason: string;
@@ -48,9 +51,17 @@ export default function DoctorDashboard() {
       const currentUser = await getCurrentUser();
       if (!currentUser) {
         // Enforce login
-        router.push("/book-appointment");
+        router.push("/login");
         return;
       }
+
+      if (!currentUser.labels || !currentUser.labels.includes("doctor")) {
+        // Not a doctor, send to patient portal
+        toast.error("Unauthorized Access", { description: "You are not authorized as a doctor." });
+        router.push("/dashboard");
+        return;
+      }
+
       setUser(currentUser);
       await Promise.all([fetchAllAppointments(), fetchAllPatients(), fetchAllRecords()]);
       setLoading(false);
@@ -152,9 +163,10 @@ export default function DoctorDashboard() {
                     <div className="flex justify-between items-start">
                       <div>
                         <CardTitle className="text-lg">
-                          {new Date(appt.date_time).toLocaleString()}
+                          {new Date(appt.date_time).toLocaleString()} - {appt.name}
                         </CardTitle>
                         <CardDescription className="mt-1">
+                          <strong>Email:</strong> {appt.email} {appt.phone && `| Phone: ${appt.phone}`}<br />
                           <strong>Reason:</strong> {appt.reason}
                         </CardDescription>
                       </div>
