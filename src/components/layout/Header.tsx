@@ -33,7 +33,6 @@ export function Header() {
         <div className="flex items-center gap-4">
           <nav className="hidden md:flex gap-6 text-sm font-medium">
             <Link href="/" className="transition-colors hover:text-primary">Home</Link>
-            <Link href="/book-appointment" className="transition-colors hover:text-primary">Book Appointment</Link>
             <Link href="/dashboard" className="transition-colors hover:text-primary">Patient Portal</Link>
           </nav>
           <div className="flex items-center gap-2">

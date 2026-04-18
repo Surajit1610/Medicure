@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -56,65 +57,83 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <section className="relative w-full py-20 md:py-32 lg:py-40 xl:py-48 bg-gradient-to-br from-primary/10 via-background to-primary/5 overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{backgroundImage: "url('/medical-hero-bg.svg')"}}></div>
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-primary/10"></div>
-        <div className="absolute inset-0 bg-black/30"></div>
-        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+      <section className="relative w-full pt-0 pb-0 md:pt-24 md:pb-32 lg:pt-32 lg:pb-40 bg-gradient-to-br from-primary/5 via-background to-primary/5 overflow-hidden">
         <div className="container px-4 md:px-6 mx-auto relative z-10">
-          <motion.div
-            className="flex flex-col items-center space-y-6 text-center max-w-5xl mx-auto"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
+          <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 lg:gap-8 items-center gap-8 md:gap-12">
+            {/* Left Column: Text */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
+              className="flex flex-col space-y-8"
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+              <div className="space-y-6">
+                <Badge variant="secondary" className="px-4 py-2 text-sm font-medium bg-primary/10 text-primary border-primary/20">
+                  <HeartPulse className="mr-2 h-4 w-4" /> Trusted Medical Excellence
+                </Badge>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-foreground font-poppins leading-[1.1]">
+                  Compassionate Care for Your <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">Wellness</span>
+                </h1>
+                <p className="max-w-[600px] text-muted-foreground text-lg md:text-xl leading-relaxed">
+                  Experience world-class medical care with Dr. Sharma. Combining cutting-edge technology with personalized attention to deliver exceptional healthcare outcomes.
+                </p>
+              </div>
+              <div className="flex gap-4 flex-col sm:flex-row">
+                <motion.div whileHover={scaleOnHover} whileTap={{ scale: 0.95 }}>
+                  <Link href="/book-appointment">
+                    <Button size="lg" className="px-8 h-14 w-full sm:w-auto text-lg font-semibold gap-3 shadow-lg hover:shadow-xl transition-all duration-300">
+                      <CalendarDays className="w-5 h-5" /> Book Appointment
+                    </Button>
+                  </Link>
+                </motion.div>
+                <motion.div whileHover={scaleOnHover} whileTap={{ scale: 0.95 }}>
+                  <Link href="#about">
+                    <Button variant="outline" size="lg" className="px-8 h-14 w-full sm:w-auto text-lg font-medium border-2 transition-all duration-300">
+                      Learn More
+                    </Button>
+                  </Link>
+                </motion.div>
+              </div>
+            </motion.div>
+
+            {/* Right Column: Hero Image */}
+            <motion.div
+              className="relative block mx-auto w-full max-w-[600px] lg:max-w-none mt-12 md:mt-0"
+              initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <Badge variant="secondary" className="px-4 py-2 text-sm font-medium bg-white/90 text-primary border-primary/20 backdrop-blur-sm">
-                <HeartPulse className="mr-2 h-4 w-4" /> Trusted Medical Excellence
-              </Badge>
-            </motion.div>
-            <motion.h1
-              className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight text-white font-poppins leading-tight drop-shadow-lg"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
-              Compassionate Care for Your <span className="text-white bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">Wellness</span>
-            </motion.h1>
-            <motion.p
-              className="mx-auto max-w-2xl text-white/90 md:text-xl lg:text-2xl leading-relaxed font-light drop-shadow-md"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-            >
-              Experience world-class medical care with Dr. Sharma. Combining cutting-edge technology with personalized attention to deliver exceptional healthcare outcomes.
-            </motion.p>
-            <motion.div
-              className="flex gap-4 mt-8 flex-col sm:flex-row"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-            >
-              <motion.div whileHover={scaleOnHover} whileTap={{ scale: 0.95 }}>
-                <Link href="/book-appointment">
-                  <Button size="lg" className="px-8 h-14 w-full sm:w-auto text-lg font-semibold gap-3 shadow-xl shadow-black/25 hover:shadow-2xl transition-all duration-300 bg-white text-primary hover:bg-white/90">
-                    <CalendarDays className="w-5 h-5" /> Book Appointment
-                  </Button>
-                </Link>
-              </motion.div>
-              <motion.div whileHover={scaleOnHover} whileTap={{ scale: 0.95 }}>
-                <Link href="#about">
-                  <Button variant="outline" size="lg" className="px-8 h-14 w-full sm:w-auto text-lg font-medium border-2 border-white text-white hover:bg-white hover:text-primary transition-all duration-300 bg-transparent">
-                    Learn More
-                  </Button>
-                </Link>
+              <div className="relative aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border bg-muted/20">
+                <Image
+                  src="/hero-medical.png"
+                  alt="Friendly doctor consulting patient"
+                  fill
+                  className="object-cover transition-transform duration-700 hover:scale-105"
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+              </div>
+              
+              {/* Floating Badge */}
+              <motion.div 
+                className="absolute -bottom-4 -left-2 md:-bottom-6 md:-left-6 bg-background rounded-2xl p-3 md:p-6 shadow-xl border z-20"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.8 }}
+                whileHover={{ y: -5 }}
+              >
+                <div className="flex items-center gap-3 md:gap-4">
+                  <div className="h-10 w-10 md:h-12 md:w-12 rounded-full bg-green-100 flex items-center justify-center">
+                    <Star className="h-4 w-4 md:h-6 md:w-6 text-green-600 fill-green-600" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-lg md:text-xl">4.9/5</p>
+                    <p className="text-xs md:text-sm text-muted-foreground whitespace-nowrap">Patient Satisfaction</p>
+                  </div>
+                </div>
               </motion.div>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -159,7 +178,7 @@ export default function Home() {
                 whileInView="animate"
                 viewport={{ once: true }}
               >
-                <motion.div className="flex items-start space-x-3" variants={staggerItem}>
+                <motion.div className="flex items-start space-x-3" initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.5, delay: 0.1 }}>
                   <motion.div whileHover={{ scale: 1.1 }} transition={{ duration: 0.2 }}>
                     <CheckCircle className="h-6 w-6 text-primary mt-0.5 flex-shrink-0" />
                   </motion.div>
@@ -168,7 +187,7 @@ export default function Home() {
                     <p className="text-muted-foreground">Every treatment plan is tailored to your unique needs and circumstances.</p>
                   </div>
                 </motion.div>
-                <motion.div className="flex items-start space-x-3" variants={staggerItem}>
+                <motion.div className="flex items-start space-x-3" initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.5, delay: 0.2 }}>
                   <motion.div whileHover={{ scale: 1.1 }} transition={{ duration: 0.2 }}>
                     <CheckCircle className="h-6 w-6 text-primary mt-0.5 flex-shrink-0" />
                   </motion.div>
@@ -177,7 +196,7 @@ export default function Home() {
                     <p className="text-muted-foreground">Utilizing state-of-the-art diagnostic tools and treatment methods.</p>
                   </div>
                 </motion.div>
-                <motion.div className="flex items-start space-x-3" variants={staggerItem}>
+                <motion.div className="flex items-start space-x-3" initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.5, delay: 0.3 }}>
                   <motion.div whileHover={{ scale: 1.1 }} transition={{ duration: 0.2 }}>
                     <CheckCircle className="h-6 w-6 text-primary mt-0.5 flex-shrink-0" />
                   </motion.div>
@@ -196,22 +215,22 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.3 }}
             >
               <motion.div
-                className="aspect-square bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl p-8 flex items-center justify-center"
+                className="relative aspect-square md:aspect-[3/4] lg:aspect-[4/5] rounded-3xl overflow-hidden shadow-xl"
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               >
-                <div className="text-center space-y-4">
-                  <motion.div
-                    className="w-32 h-32 bg-primary/10 rounded-full flex items-center justify-center mx-auto"
-                    whileHover={{ rotate: 5, scale: 1.05 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Stethoscope className="h-16 w-16 text-primary" />
-                  </motion.div>
-                  <div className="space-y-2">
-                    <h3 className="text-2xl font-bold font-poppins">Dr. Sharma</h3>
-                    <p className="text-muted-foreground">MBBS, MD (Internal Medicine)</p>
-                    <p className="text-sm text-primary font-medium">15+ Years Experience</p>
+                <Image
+                  src="/doctor-portrait.png"
+                  alt="Portrait of Dr. Sharma"
+                  fill
+                  className="object-cover"
+                />
+                {/* Overlay text at bottom of portrait */}
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-8 pt-16">
+                  <div className="text-white space-y-1">
+                    <h3 className="text-2xl font-bold font-poppins text-white drop-shadow-md">Dr. Sharma</h3>
+                    <p className="text-white/90 font-medium">MBBS, MD (Internal Medicine)</p>
+                    <p className="text-primary-foreground/80 text-sm">15+ Years Clinical Experience</p>
                   </div>
                 </div>
               </motion.div>
@@ -257,52 +276,74 @@ export default function Home() {
               {
                 icon: HeartPulse,
                 title: "Cardiology Consultations",
-                description: "Expert heart health assessments and preventive care strategies."
+                description: "Expert heart health assessments and preventive care strategies.",
+                image: "/cardiology.png"
               },
               {
                 icon: Stethoscope,
                 title: "Internal Medicine",
-                description: "Comprehensive diagnosis and treatment of complex medical conditions."
+                description: "Comprehensive diagnosis and treatment of complex medical conditions.",
+                image: "/internal-med.png"
               },
               {
                 icon: Microscope,
                 title: "Diagnostic Services",
-                description: "Advanced laboratory testing and imaging for accurate diagnosis."
+                description: "Advanced laboratory testing and imaging for accurate diagnosis.",
+                image: "/diagnostic.png"
               },
               {
                 icon: Users,
                 title: "Family Medicine",
-                description: "Caring for patients of all ages with a focus on family health."
+                description: "Caring for patients of all ages with a focus on family health.",
+                image: "/family-med.png"
               },
               {
                 icon: Shield,
                 title: "Preventive Care",
-                description: "Proactive health screenings and wellness programs."
+                description: "Proactive health screenings and wellness programs.",
+                image: "/preventive.png"
               },
               {
                 icon: Clock,
                 title: "Emergency Care",
-                description: "24/7 availability for urgent medical situations."
+                description: "24/7 availability for urgent medical situations.",
+                image: "/hero-medical.png"
               }
             ].map((service, index) => (
-              <motion.div key={index} variants={staggerItem}>
+              <motion.div 
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: (index % 3) * 0.1 }}
+              >
                 <motion.div
                   whileHover={cardHover}
                   transition={{ duration: 0.3 }}
                   className="h-full"
                 >
-                  <Card className="group hover:shadow-lg transition-all duration-300 border-0 bg-background/50 backdrop-blur-sm h-full">
-                    <CardHeader className="pb-4">
-                      <motion.div
-                        className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors"
-                        whileHover={{ rotate: 5, scale: 1.1 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <service.icon className="h-6 w-6 text-primary" />
-                      </motion.div>
-                      <CardTitle className="text-xl font-semibold">{service.title}</CardTitle>
+                  <Card className="group hover:shadow-xl transition-all duration-300 border-0 bg-background overflow-hidden h-full flex flex-col">
+                    <div className="relative w-full h-48 md:h-52 overflow-hidden bg-muted">
+                      <Image 
+                        src={service.image} 
+                        alt={service.title} 
+                        fill 
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-background via-background/60 to-transparent p-4 pb-0 flex items-end">
+                        <motion.div
+                          className="w-12 h-12 bg-background shadow-md rounded-t-xl rounded-br-xl rounded-bl-sm flex items-center justify-center translate-y-3"
+                          whileHover={{ rotate: 5, scale: 1.1 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <service.icon className="h-6 w-6 text-primary" />
+                        </motion.div>
+                      </div>
+                    </div>
+                    <CardHeader className="pt-8 pb-4">
+                      <CardTitle className="text-xl font-semibold font-poppins">{service.title}</CardTitle>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="flex-1">
                       <p className="text-muted-foreground">{service.description}</p>
                     </CardContent>
                   </Card>
@@ -333,13 +374,7 @@ export default function Home() {
               Excellence in Healthcare
             </motion.h2>
           </motion.div>
-          <motion.div
-            className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4"
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, margin: "-100px" }}
-          >
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {[
               {
                 icon: Award,
@@ -362,7 +397,13 @@ export default function Home() {
                 description: "Easy online booking with flexible appointment times and minimal wait times."
               }
             ].map((credential, index) => (
-              <motion.div key={index} variants={staggerItem}>
+              <motion.div 
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: (index % 4) * 0.1 }}
+              >
                 <motion.div
                   className="text-center space-y-4 p-6 rounded-xl bg-muted/50 hover:bg-muted/70 transition-colors h-full"
                   whileHover={{ scale: 1.03, y: -5 }}
@@ -380,7 +421,7 @@ export default function Home() {
                 </motion.div>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -434,7 +475,13 @@ export default function Home() {
                 text: "The doctor's expertise and the clinic's modern facilities made my experience wonderful. Highly recommend for anyone seeking quality healthcare."
               }
             ].map((testimonial, index) => (
-              <motion.div key={index} variants={staggerItem}>
+              <motion.div 
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: (index % 3) * 0.1 }}
+              >
                 <motion.div
                   whileHover={{ scale: 1.02, y: -5 }}
                   transition={{ duration: 0.3 }}
@@ -551,6 +598,36 @@ export default function Home() {
                 </motion.a>
               </motion.div>
             </motion.div>
+          </motion.div>
+          
+          <motion.div 
+            className="mt-20 mx-auto max-w-5xl rounded-3xl overflow-hidden shadow-2xl flex flex-col md:block relative border-4 border-white/20 bg-slate-900"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            {/* Image Layer */}
+            <div className="relative w-full aspect-[4/3] sm:aspect-video md:absolute md:inset-0">
+              <Image
+                src="/telemedicine.png"
+                alt="Telemedicine Lifestyle"
+                fill
+                className="object-cover"
+              />
+            </div>
+            
+            {/* Desktop Spacing Placeholder */}
+            <div className="hidden md:block w-full aspect-[21/9]"></div>
+
+            {/* Content Layer (Stacked on mobile, Absolute on desktop) */}
+            <div className="relative z-10 p-8 sm:p-10 md:p-12 md:absolute md:inset-0 flex items-center bg-gradient-to-t overflow-hidden md:bg-gradient-to-r from-black/95 via-black/80 md:via-black/50 to-black/40 md:to-transparent">
+              <div className="max-w-md relative z-20">
+                <Badge variant="secondary" className="mb-4 bg-primary text-primary-foreground border-transparent">Virtual Clinic</Badge>
+                <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 drop-shadow-md">Care from Anywhere</h3>
+                <p className="text-white/90 text-lg sm:text-xl mb-8 drop-shadow">Connect with Dr. Sharma instantly through high-quality video consultations from the comfort of your home.</p>
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
