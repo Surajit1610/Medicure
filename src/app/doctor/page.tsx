@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Models, ID } from "appwrite";
 import axios from "axios";
 import { getCurrentUser, logoutUser } from "@/lib/auth";
-import { storage, getFileUrl } from "@/lib/appwrite";
+import { getFileUrl } from "@/lib/appwrite";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -117,12 +117,14 @@ export default function DoctorDashboard() {
 
     setUploading(true);
     try {
-      const uploadedFile = await storage.createFile("medical_records", ID.unique(), file);
-      await axios.post("/api/records", {
-        patient_id: selectedPatientId,
-        title: fileTitle,
-        file_id: uploadedFile.$id,
-        uploaded_by: "doctor",
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("patient_id", selectedPatientId);
+      formData.append("title", fileTitle);
+      formData.append("uploaded_by", "doctor");
+
+      await axios.post("/api/records", formData, {
+        headers: { "Content-Type": "multipart/form-data" }
       });
       toast.success("Record shared with patient!");
       setFileTitle("");

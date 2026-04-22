@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Models, ID } from "appwrite";
 import axios from "axios";
 import { getCurrentUser, logoutUser } from "@/lib/auth";
-import { storage, getFileUrl } from "@/lib/appwrite";
+import { getFileUrl } from "@/lib/appwrite";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -89,13 +89,14 @@ export default function PatientDashboard() {
 
     setUploading(true);
     try {
-      const uploadedFile = await storage.createFile("medical_records", ID.unique(), file);
-      // Link the file to the patient in the DB
-      await axios.post("/api/records", {
-        patient_id: user.$id,
-        title: fileTitle,
-        file_id: uploadedFile.$id,
-        uploaded_by: "patient",
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("patient_id", user.$id);
+      formData.append("title", fileTitle);
+      formData.append("uploaded_by", "patient");
+
+      await axios.post("/api/records", formData, {
+        headers: { "Content-Type": "multipart/form-data" }
       });
       toast.success("File uploaded safely!");
       setFileTitle("");
