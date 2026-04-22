@@ -5,8 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { getCurrentUser } from "@/lib/auth";
-import { databaseId, databases } from "@/lib/appwrite";
-import { ID, Models } from "appwrite";
+import { Models } from "appwrite";
+import axios from "axios";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
@@ -62,13 +62,12 @@ export default function BookAppointmentPage() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
     try {
-      await databases.createDocument(databaseId, "appointments", ID.unique(), {
+      await axios.post("/api/appointments", {
         name: values.name,
         email: values.email,
         phone: values.phone || null,
         patient_id: currentUser ? currentUser.$id : null,
         date_time: new Date(values.date).toISOString(),
-        status: "pending",
         reason: values.reason,
       });
 

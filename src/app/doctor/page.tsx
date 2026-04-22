@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Models, Query, ID } from "appwrite";
+import { Models, ID } from "appwrite";
+import axios from "axios";
 import { getCurrentUser, logoutUser } from "@/lib/auth";
-import { databaseId, databases, storage, getFileUrl } from "@/lib/appwrite";
+import { storage, getFileUrl } from "@/lib/appwrite";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -71,8 +72,8 @@ export default function DoctorDashboard() {
 
   async function fetchAllAppointments() {
     try {
-      const res = await databases.listDocuments(databaseId, "appointments", [Query.orderDesc("date_time")]);
-      setAppointments(res.documents as unknown as Appointment[]);
+      const res = await axios.get("/api/appointments");
+      setAppointments(res.data.documents as unknown as Appointment[]);
     } catch (error) {
       console.error(error);
     }
@@ -80,8 +81,8 @@ export default function DoctorDashboard() {
 
   async function fetchAllPatients() {
     try {
-      const res = await databases.listDocuments(databaseId, "patients", [Query.orderDesc("$createdAt")]);
-      setPatients(res.documents as unknown as Patient[]);
+      const res = await axios.get("/api/patients");
+      setPatients(res.data.documents as unknown as Patient[]);
     } catch (error) {
       console.error(error);
     }
@@ -89,8 +90,8 @@ export default function DoctorDashboard() {
 
   async function fetchAllRecords() {
     try {
-      const res = await databases.listDocuments(databaseId, "records", [Query.orderDesc("$createdAt")]);
-      setRecords(res.documents as unknown as RecordDoc[]);
+      const res = await axios.get("/api/records");
+      setRecords(res.data.documents as unknown as RecordDoc[]);
     } catch (error) {
       console.error(error);
     }
@@ -98,11 +99,11 @@ export default function DoctorDashboard() {
 
   const updateAppointmentStatus = async (id: string, status: string) => {
     try {
-      await databases.updateDocument(databaseId, "appointments", id, { status });
+      await axios.patch(`/api/appointments/${id}/status`, { status });
       toast.success(`Appointment marked as ${status}`);
       fetchAllAppointments();
     } catch (error: any) {
-      toast.error("Failed to update status", { description: error.message });
+      toast.error("Failed to update status", { description: error.response?.data?.error || error.message });
     }
   };
 
@@ -117,7 +118,7 @@ export default function DoctorDashboard() {
     setUploading(true);
     try {
       const uploadedFile = await storage.createFile("medical_records", ID.unique(), file);
-      await databases.createDocument(databaseId, "records", ID.unique(), {
+      await axios.post("/api/records", {
         patient_id: selectedPatientId,
         title: fileTitle,
         file_id: uploadedFile.$id,

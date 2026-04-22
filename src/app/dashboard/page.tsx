@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Models, Query, ID } from "appwrite";
+import { Models, ID } from "appwrite";
+import axios from "axios";
 import { getCurrentUser, logoutUser } from "@/lib/auth";
-import { databaseId, databases, storage, getFileUrl } from "@/lib/appwrite";
+import { storage, getFileUrl } from "@/lib/appwrite";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -57,11 +58,8 @@ export default function PatientDashboard() {
 
   async function fetchAppointments(userId: string) {
     try {
-      const res = await databases.listDocuments(databaseId, "appointments", [
-        Query.equal("patient_id", userId),
-        Query.orderDesc("date_time")
-      ]);
-      setAppointments(res.documents as unknown as Appointment[]);
+      const res = await axios.get(`/api/appointments?patient_id=${userId}`);
+      setAppointments(res.data.documents as unknown as Appointment[]);
     } catch (error) {
       console.error(error);
     }
@@ -69,11 +67,8 @@ export default function PatientDashboard() {
 
   async function fetchRecords(userId: string) {
     try {
-      const res = await databases.listDocuments(databaseId, "records", [
-        Query.equal("patient_id", userId),
-        Query.orderDesc("$createdAt")
-      ]);
-      setRecords(res.documents as unknown as RecordDoc[]);
+      const res = await axios.get(`/api/records?patient_id=${userId}`);
+      setRecords(res.data.documents as unknown as RecordDoc[]);
     } catch (error) {
       console.error(error);
     }
@@ -96,7 +91,7 @@ export default function PatientDashboard() {
     try {
       const uploadedFile = await storage.createFile("medical_records", ID.unique(), file);
       // Link the file to the patient in the DB
-      await databases.createDocument(databaseId, "records", ID.unique(), {
+      await axios.post("/api/records", {
         patient_id: user.$id,
         title: fileTitle,
         file_id: uploadedFile.$id,
