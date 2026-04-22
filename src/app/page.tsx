@@ -55,7 +55,7 @@ const cardHover = {
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen overflow-x-hidden">
       {/* Hero Section */}
       <section className="relative w-full pt-0 pb-0 md:pt-24 md:pb-32 lg:pt-32 lg:pb-40 bg-gradient-to-br from-primary/5 via-background to-primary/5 overflow-hidden">
         <div className="container px-4 md:px-6 mx-auto relative z-10">
